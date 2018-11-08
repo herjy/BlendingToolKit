@@ -16,6 +16,6 @@ def generate(Args):
             survey['image_width'] = Args.stamp_size / survey['pixel_scale']
             survey['image_height'] = Args.stamp_size / survey['pixel_scale']
             descwl_survey = descwl.survey.Survey(survey_name=Args.survey_name,
-                                                 filter_band='u', **survey)
+                                                 filter_band=band, **survey)
             observing_generator.append(descwl_survey)
         yield observing_generator
