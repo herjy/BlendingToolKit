@@ -1,19 +1,29 @@
 """Contains functions to perform detection, deblending and measurement
     on images.
 """
-import lsst.afw.table
-import lsst.afw.image
-import lsst.afw.math
-import lsst.meas.algorithms
-import lsst.meas.base
-import lsst.meas.deblender
-import lsst.meas.extensions.shapeHSM
-import scarlet
+
 from btk import measure
 import numpy as np
 
+try:
+    import lsst.afw.table
+    import lsst.afw.image
+    import lsst.afw.math
+    import lsst.meas.algorithms
+    import lsst.meas.base
+    import lsst.meas.deblender
+    import lsst.meas.extensions.shapeHSM
+except ImportError:
+    print("Warning: LSST stack not found, you will run into errors if using Stack_params.")
+
+try:
+    import scarlet
+except ImportError:
+    print("Warning: Scarlet not found, you will run into errors if using Scarlet_params.")
+
 
 class Stack_params(measure.Measurement_params):
+
     min_pix = 1
     bkg_bin_size = 32
     thr_value = 5
@@ -94,6 +104,7 @@ def run_stack(image_array, variance_array, psf_array,
 
 
 class Scarlet_params(measure.Measurement_params):
+
     iters = 200
     e_rel = .015
 
@@ -111,7 +122,7 @@ class Scarlet_params(measure.Measurement_params):
         bg_rms: Background RMS value of the images [Number of bands]
         iters: Maximum number of iterations if scarlet doesn't converge
                (Default: 200).
-        e_rel: Relative error for convergence (Deafult: 0.015)
+        e_rel: Relative error for convergence (Default: 0.015)
         Returns
         blend: scarlet.Blend object for the initialized sources
         rejected_sources: list of sources (if any) that scarlet was
