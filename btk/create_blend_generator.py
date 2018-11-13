@@ -17,9 +17,9 @@ def get_random_center_shift(Args, number_of_objects, maxshift_stamp_frac=0.1, mi
         dx = r * np.cos(t)
         dy = r * np.sin(t)
     else:
-    dx = np.random.uniform(-maxshift, maxshift,
+        dx = np.random.uniform(-maxshift, maxshift,
                            size=number_of_objects)
-    dy = np.random.uniform(-maxshift, maxshift,
+        dy = np.random.uniform(-maxshift, maxshift,
                            size=number_of_objects)
     return dx, dy
 
