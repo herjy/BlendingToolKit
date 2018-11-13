@@ -12,8 +12,8 @@ def get_random_center_shift(Args, number_of_objects, maxshift_stamp_frac=0.1, mi
     maxshift = Args.stamp_size * maxshift_stamp_frac  # in arcseconds
     minshift = Args.stamp_size * minshift_stamp_frac  # in arcseconds
     if radial:
-        r = np.sqrt(np.random.rand(size=number_of_objects)*(maxshift**2-minshift**2)+minshift**2);
-        t = 2.*np.pi*np.random.rand(size=number_of_objects)
+        r = np.sqrt(np.random.rand(number_of_objects)*(maxshift**2-minshift**2)+minshift**2);
+        t = 2.*np.pi*np.random.rand(number_of_objects)
         dx = r * np.cos(t)
         dy = r * np.sin(t)
     else:
