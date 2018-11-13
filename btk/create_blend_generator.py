@@ -2,11 +2,21 @@
 import numpy as np
 
 
-def get_random_center_shift(Args, number_of_objects):
-    """Returns a random shift from the center in x and y coordiantes
-    between 0 and maxshift (in arcseconds).
+def get_random_center_shift(Args, number_of_objects, maxshift_stamp_frac=0.1, minshift_stamp_frac=0.0, radial=False):
     """
-    maxshift = Args.stamp_size / 10.  # in arcseconds
+    Returns a random shift from the center in x and y coordiantes
+    - if radial=False, in a square of size maxshift*Args.stamp_size (in arcseconds).
+    - if radial=True, in an annulus of radii between minshift_stamp_frac*Args.stamp_size and
+    maxshift_stamp_frac*Args.stamp_size (in arcseconds).
+    """
+    maxshift = Args.stamp_size * maxshift_stamp_frac  # in arcseconds
+    minshift = Args.stamp_size * minshift_stamp_frac  # in arcseconds
+    if radial:
+        r = np.sqrt(np.random.rand(size=number_of_objects)*(maxshift**2-minshift**2)+minshift**2);
+        t = 2.*np.pi*np.random.rand(size=number_of_objects)
+        dx = r * np.cos(t)
+        dy = r * np.sin(t)
+    else:
     dx = np.random.uniform(-maxshift, maxshift,
                            size=number_of_objects)
     dy = np.random.uniform(-maxshift, maxshift,
